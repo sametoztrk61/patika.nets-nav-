@@ -1,0 +1,61 @@
+using System;
+
+class MainClass {
+
+  public static string StringChallenge(string str) {
+
+   
+        string[] parts = str.Split('-');
+        string startTime = parts[0].Trim();
+        string endTime = parts[1].Trim();
+
+        int startHour = int.Parse(startTime.Substring(0, startTime.IndexOf(':')));
+        int startMinute = int.Parse(startTime.Substring(startTime.IndexOf(':') + 1, 2));
+        bool startIsPM = startTime.EndsWith("pm", StringComparison.OrdinalIgnoreCase);
+
+        int endHour = int.Parse(endTime.Substring(0, endTime.IndexOf(':')));
+        int endMinute = int.Parse(endTime.Substring(endTime.IndexOf(':') + 1, 2));
+        bool endIsPM = endTime.EndsWith("pm", StringComparison.OrdinalIgnoreCase);
+
+        if (startIsPM && startHour != 12)
+        {
+            startHour += 12;
+        }
+        if (endIsPM && endHour != 12)
+        {
+            endHour += 12;
+        }
+        if (!startIsPM && startHour == 12)
+        {
+            startHour = 0;
+        }
+        if (!endIsPM && endHour == 12)
+        {
+            endHour = 0;
+        }
+
+      
+        int totalMinutes = 0;
+        if (endHour > startHour || (endHour == startHour && endMinute >= startMinute))
+        {
+           
+            totalMinutes = (endHour - startHour) * 60 + (endMinute - startMinute);
+        }
+        else
+        {
+            totalMinutes = (24 - startHour + endHour) * 60 + (endMinute - startMinute);
+        }
+      str = Convert.ToString(totalMinutes);
+      
+        return str;
+
+  }
+
+  static void Main() {  
+
+    // keep this function call here
+    Console.WriteLine(StringChallenge(Console.ReadLine()));
+    
+  } 
+
+}
